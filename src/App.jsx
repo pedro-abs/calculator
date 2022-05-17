@@ -1,32 +1,34 @@
 import './App.css'
 
 import Button from './components/buttons/button'
-import Screen from './components/screen/screen'
 
 function App() {
   return (
     <div className='container'>
       <div className="grid">
-        <Screen/>
+        <div className="screen">
+          <div className='previous-screen' data-previous></div>
+          <div className='current-screen' data-current></div>
+        </div>
         <div className="digits">
-          <Button symbol='C' className='c'/>
-          <Button symbol='←' className='back'/>
-          <Button symbol='/' className='div'/>
-          <Button symbol='x' className='mult'/>
-          <Button symbol='-' className='less'/>
-          <Button symbol='7' className='seven'/>
-          <Button symbol='8' className='eight'/>
-          <Button symbol='9' className='nine'/>
-          <Button symbol='+' className='more'/>
-          <Button symbol='4' className='four'/>
-          <Button symbol='5' className='five'/>
-          <Button symbol='6' className='six'/>
-          <Button symbol='1' className='one'/>
-          <Button symbol='2' className='two'/>
-          <Button symbol='3' className='three'/>
-          <Button symbol='0' className='zero'/>
-          <Button symbol='.' className='point'/>
-          <Button symbol='=' className='result'/>
+          <Button symbol='C' className='c' data-clear/>
+          <Button symbol='←' className='back' data-delete/>
+          <Button symbol='/' className='div special' data-operator/>
+          <Button symbol='x' className='mult special' data-operator/>
+          <Button symbol='-' className='less special' data-operator/>
+          <Button symbol='7' className='seven' data-number/>
+          <Button symbol='8' className='eight' data-number/>
+          <Button symbol='9' className='nine' data-number/>
+          <Button symbol='+' className='more special' data-operator/>
+          <Button symbol='4' className='four' data-number/>
+          <Button symbol='5' className='five' data-number/>
+          <Button symbol='6' className='six' data-number/>
+          <Button symbol='1' className='one' data-number/>
+          <Button symbol='2' className='two' data-number/>
+          <Button symbol='3' className='three' data-number/>
+          <Button symbol='0' className='zero' data-number/>
+          <Button symbol='.' className='point' data-number/>
+          <Button symbol='=' className='result special' data-result/>
         </div>
       </div>
     </div>
@@ -35,5 +37,35 @@ function App() {
 
 export default App
 
-const screen = document.getElementsByClassName('screen')
-const screen = document.getElementsByClassName('screen')
+const numberButtons = document.querySelectorAll('[data-number]')
+const operationsButtons = document.querySelectorAll('[data-operator]')
+const resultButton = document.querySelector('[data-result]')
+const deleteButton = document.querySelector('[data-delete]')
+const clearButton = document.querySelector('[data-clear]')
+const previousScreenTxt = document.querySelector('[data-previous]')
+const currentScreenTxt = document.querySelector('[data-current]')
+
+class Calculator {
+  constructor(previousScreenTxt, currentScreenTxt) {
+    this.previousScreenTxt = previousScreenTxt
+    this.currentScreenTxt = currentScreenTxt
+  }
+
+  UpdateScreen() {
+    this.previousScreenTxt.innerText = this.previousScreen
+    this.currentScreenTxt.innerText = this.currentScreen
+  }
+  
+  Clear() {
+    this.previousScreen = ''
+    this.currentScreen = ''
+    this.operation = undefined
+  }
+}
+
+const calculator = new Calculator(previousScreenTxt,currentScreenTxt)
+
+clearButton.addEventListener('click', () => {
+  calculator.Clear()
+  calculator.UpdateScreen()
+})
