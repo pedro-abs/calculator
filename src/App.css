@@ -31,9 +31,3 @@
     display: flex;
     flex-direction: row;
 }
-
-.btn-small { width: 25%; }
-
-.btn-medium { width: 50%; }
-
-.btn-large { width: 75%; }

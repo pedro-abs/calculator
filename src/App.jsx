@@ -9,9 +9,9 @@ function App() {
       <div className="grid">
         <Screen/>
         <div className="digits">
-          <Button symbol='x' className='mult btn-medium'/>
-          <Button symbol='/' className='div btn-small'/>
-          <Button symbol='-' className='less btn-small'/>
+          <Button symbol='x' className='mult'/>
+          <Button symbol='/' className='div'/>
+          <Button symbol='-' className='less'/>
           <Button symbol='7' className='seven'/>
           <Button symbol='8' className='eight'/>
           <Button symbol='9' className='nine'/>
