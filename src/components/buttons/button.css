@@ -1,3 +1,11 @@
 button {
-    font-size: xx-large;
+    background-color: #FFFFFF60;
+    color: #000000;
+    border-radius: 10px;
+    font-size: 3rem;
+}
+
+button:hover {
+    background-color: #FFFFFF30;
+    color: #FFFFFF60;
 }

@@ -34,3 +34,6 @@ function App() {
 }
 
 export default App
+
+const screen = document.getElementsByClassName('screen')
+const screen = document.getElementsByClassName('screen')
