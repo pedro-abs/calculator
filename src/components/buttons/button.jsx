@@ -2,7 +2,7 @@ import './button.css'
 
 function Button(props) {
     return (
-        <button>{props.symbol}</button>
+        <button className={props.className}>{props.symbol}</button>
         )
 }
 
