@@ -1,6 +1,6 @@
 import './App.css'
 
-import Button from './components/buttons/button'
+import Button from './components/buttons/button.jsx'
 
 function App() {
   return (
@@ -36,36 +36,3 @@ function App() {
 }
 
 export default App
-
-const numberButtons = document.querySelectorAll('[data-number]')
-const operationsButtons = document.querySelectorAll('[data-operator]')
-const resultButton = document.querySelector('[data-result]')
-const deleteButton = document.querySelector('[data-delete]')
-const clearButton = document.querySelector('[data-clear]')
-const previousScreenTxt = document.querySelector('[data-previous]')
-const currentScreenTxt = document.querySelector('[data-current]')
-
-class Calculator {
-  constructor(previousScreenTxt, currentScreenTxt) {
-    this.previousScreenTxt = previousScreenTxt
-    this.currentScreenTxt = currentScreenTxt
-  }
-
-  UpdateScreen() {
-    this.previousScreenTxt.innerText = this.previousScreen
-    this.currentScreenTxt.innerText = this.currentScreen
-  }
-  
-  Clear() {
-    this.previousScreen = ''
-    this.currentScreen = ''
-    this.operation = undefined
-  }
-}
-
-const calculator = new Calculator(previousScreenTxt,currentScreenTxt)
-
-clearButton.addEventListener('click', () => {
-  calculator.Clear()
-  calculator.UpdateScreen()
-})
