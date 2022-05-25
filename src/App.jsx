@@ -43,7 +43,7 @@ function App() {
       }
 
       const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
-      setState(result)
+      setState(result + operator + '')
       setScreenValue(result)
     }
 
