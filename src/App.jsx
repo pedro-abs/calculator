@@ -1,50 +1,76 @@
 import { useState } from "react";
 import "./App.css";
 
-import Button from "./components/buttons/button.jsx";
+import Button from "./components/buttons/button.jsx";  
 
 function App() {
-  const [state, setState] = useState([])
-  const [screenCurrent, setScreenCurrent] = useState('0')
+  const [state, setState] = useState("0")
+  const [screenValue, setScreenValue] = useState('0')
+
   console.log(state)
-  function Write(symbol) {
-    if (Number.isNaN(Number(symbol))) {
-      if (state.length === 1 || state.length === 2) {
-        setState([state[0], symbol])
-      } else if (state.length === 3) {
-        switch (state[1]) {
-          case '+':
-            setState([Number(state[0]) + Number(state[2]), symbol])
-            break
-          case '-':
-            setState([Number(state[0]) - Number(state[2]), symbol])
-            break
-          case '/':
-            setState([Number(state[0]) / Number(state[2]), symbol])
-            break
-          case 'x':
-            setState([Number(state[0]) * Number(state[2]), symbol])
-            break
-          // case '=':
-          //   setState([])
-          // default:
-            
-        }
-      }
+
+  function write(button) {
+    const SYMBOLS_MAP = {
+      "C": () => reset(),
+      "←": () => setState(state.slice(0, -1)),
+      "=": () => doCalc(),
+      "/": () => insertSymbol("/"),
+      "x": () => insertSymbol("*"),
+      "-": () => insertSymbol("-"),
+      "+": () => insertSymbol("+"),
+    }
+
+    const isNumber = !Boolean(SYMBOLS_MAP[button])
+
+    if (isNumber) {
+      insertNumber(button)
     } else {
-      if (state.length === 0 || state.length === 1) {
-        if (state.length === 1) {
-          setState([state[0] + symbol])
-        } else {
-          setState([symbol])
-        }
-      } else if (state.length === 2 || state.length === 3) {
-        if (state.length === 2) {
-          setState([...state, symbol])
-        } else {
-          setState([state[0], state[1], state[2] + symbol])
-        }
+      SYMBOLS_MAP[button]()
+    }
+
+    function doCalc() {
+      const calc = state.split(/(\/|x|-|\+)/)
+      const isValidCalc = calc.length === 3
+      if (!isValidCalc) return
+
+      const [firstValue, operator, lastValue] = calc
+
+      const OPERATIONS_MAP = {
+        "/": (a, b) => a / b,
+        "x": (a, b) => a * b,
+        "-": (a, b) => a - b,
+        "+": (a, b) => a + b,
       }
+
+      const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
+      setState(result)
+      setScreenValue(result)
+    }
+
+    function reset() {
+      setState("0")
+      setScreenValue("0")
+    }
+
+    function insertSymbol(symbol) {
+      const lastChar = state[state.length - 1]
+      const isLastCharSymbol = Boolean(SYMBOLS_MAP[lastChar])
+
+      if (isLastCharSymbol) {
+        setState(state.slice(0, -1) + symbol)
+        return
+      }
+
+      setState(state + symbol)
+    }
+
+    function insertNumber(number) {
+      if (state === "0") {
+        setState(number)
+        return
+      }
+
+      setState(state + number)
     }
   }
   return (
@@ -52,27 +78,28 @@ function App() {
       <div className="grid">
         <div className="screen">
           <div className="state-screen">{state}</div>
-          <div className="current-screen">{screenCurrent}</div>
+          <div className="current-screen">{screenValue}</div>
         </div>
+
         <div className="digits">
-          <Button symbol="C" className="c" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="←" className="back" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="/" className="div special" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="x" className="mult special" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="-" className="less special" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="7" className="seven" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="8" className="eight" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="9" className="nine" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="+" className="more special" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="4" className="four" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="5" className="five" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="6" className="six" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="1" className="one" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="2" className="two" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="3" className="three" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="0" className="zero" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="." className="point" onClick={(symbol) => Write(symbol)}/>
-          <Button symbol="=" className="result special" onClick={(symbol) => Write(symbol)}/>
+          <Button symbol="C" className="c" onClick={write}/>
+          <Button symbol="←" className="back" onClick={write}/>
+          <Button symbol="/" className="div special" onClick={write}/>
+          <Button symbol="x" className="mult special" onClick={write}/>
+          <Button symbol="-" className="less special" onClick={write}/>
+          <Button symbol="7" className="seven" onClick={write}/>
+          <Button symbol="8" className="eight" onClick={write}/>
+          <Button symbol="9" className="nine" onClick={write}/>
+          <Button symbol="+" className="more special" onClick={write}/>
+          <Button symbol="4" className="four" onClick={write}/>
+          <Button symbol="5" className="five" onClick={write}/>
+          <Button symbol="6" className="six" onClick={write}/>
+          <Button symbol="1" className="one" onClick={write}/>
+          <Button symbol="2" className="two" onClick={write}/>
+          <Button symbol="3" className="three" onClick={write}/>
+          <Button symbol="0" className="zero" onClick={write}/>
+          <Button symbol="." className="point" onClick={write}/>
+          <Button symbol="=" className="result special" onClick={write}/>
         </div>
       </div>
     </div>
