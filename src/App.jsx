@@ -44,6 +44,8 @@ function App() {
       
       if (isValidCalc <= 3) {
         resultFinal()
+      } else {
+        setScreen(resultFinal() + result)
       }
 
       function resultFinal(OPERATIONS_MAP){
