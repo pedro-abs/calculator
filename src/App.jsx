@@ -41,11 +41,16 @@ function App() {
         "-": (a, b) => a - b,
         "+": (a, b) => a + b,
       }
+      
+      if (isValidCalc <= 3) {
+        resultFinal()
+      }
 
-      const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
-      setState(result + operator + '')
-      setScreenValue(result)
-    }
+      function resultFinal(OPERATIONS_MAP){
+        const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
+        setState(result + operator + '')
+        setScreenValue(result)}
+      }
 
     function reset() {
       setState("0")
