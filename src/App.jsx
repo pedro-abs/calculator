@@ -29,30 +29,23 @@ function App() {
     }
 
     function doCalc() {
-      const calc = state.split(/(\/|x|-|\+)/)
-      const isValidCalc = calc.length === 3
+      const calc = state.split(/(\/|\*|-|\+)/)
+      const isValidCalc = calc.length ===3
       if (!isValidCalc) return
 
       const [firstValue, operator, lastValue] = calc
 
       const OPERATIONS_MAP = {
         "/": (a, b) => a / b,
-        "x": (a, b) => a * b,
+        "*": (a, b) => a * b,
         "-": (a, b) => a - b,
         "+": (a, b) => a + b,
       }
-      
-      if (isValidCalc <= 3) {
-        resultFinal()
-      } else {
-        setScreen(resultFinal() + result)
-      }
 
-      function resultFinal(OPERATIONS_MAP){
-        const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
-        setState(result + operator + '')
-        setScreenValue(result)}
-      }
+      const result = String(OPERATIONS_MAP[operator](parseFloat(firstValue), parseFloat(lastValue)))
+      setState(result + operator + '0')
+      setScreenValue(result)
+    }
 
     function reset() {
       setState("0")
@@ -92,7 +85,7 @@ function App() {
           <Button symbol="C" className="c" onClick={write}/>
           <Button symbol="←" className="back" onClick={write}/>
           <Button symbol="/" className="div special" onClick={write}/>
-          <Button symbol="x" className="mult special" onClick={write}/>
+          <Button symbol="*" className="mult special" onClick={write}/>
           <Button symbol="-" className="less special" onClick={write}/>
           <Button symbol="7" className="seven" onClick={write}/>
           <Button symbol="8" className="eight" onClick={write}/>
