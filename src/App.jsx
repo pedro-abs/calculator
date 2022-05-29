@@ -30,7 +30,7 @@ function App() {
 
     function doCalc() {
       const calc = state.split(/(\/|\*|-|\+)/)
-      const isValidCalc = calc.length ===3
+      const isValidCalc = calc.length <= 3
       if (!isValidCalc) return
 
       const [firstValue, operator, lastValue] = calc
@@ -85,7 +85,7 @@ function App() {
           <Button symbol="C" className="c" onClick={write}/>
           <Button symbol="←" className="back" onClick={write}/>
           <Button symbol="/" className="div special" onClick={write}/>
-          <Button symbol="*" className="mult special" onClick={write}/>
+          <Button symbol="x" className="mult special" onClick={write}/>
           <Button symbol="-" className="less special" onClick={write}/>
           <Button symbol="7" className="seven" onClick={write}/>
           <Button symbol="8" className="eight" onClick={write}/>
